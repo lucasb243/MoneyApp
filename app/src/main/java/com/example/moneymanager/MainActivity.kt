@@ -1,5 +1,6 @@
 package com.example.moneymanager
 
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -25,6 +26,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.pageProfile -> setCurrentFragment(profileFragment)
             }
             true
+        }
+
+        var moneyData:SQLiteDatabase = this.openOrCreateDatabase("moneyData", MODE_PRIVATE, null)
+        moneyData.execSQL("CREATE TABLE IF NOT EXISTS revenues(type, amount, categorie, note, createdAt, editedAt)")
+        moneyData.execSQL("CREATE TABLE IF NOT EXISTS expenses(type, amount, categorie, note, createdAt, editedAt)")
+
+        for(i in 0..10){
+            moneyData.execSQL("INSERT INTO revenues (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
         }
     }
 

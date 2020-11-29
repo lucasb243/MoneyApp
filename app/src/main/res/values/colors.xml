@@ -8,8 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="mainOrange">#FEC748</color>
-    <color name="mainBlue">#253F58</color>
+    <color name="mainOrange1">#FEC748</color>
+    <color name="mainBlue1">#253F58</color>
     <color name="income">#AEC33A</color>
     <color name="expense">#D92139</color>
+
+    <color name="mainBlue">#523CF8</color>
+    <color name="mainRed">#F76654</color>
+    <color name="mainYellow">#F7DA23</color>
+
 </resources>

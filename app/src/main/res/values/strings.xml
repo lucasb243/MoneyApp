@@ -1,4 +1,7 @@
 <resources>
+
     <string name="app_name">MoneyManager</string>
-    <string name="expanse">expanse</string>
+    <string name="expense">expense</string>
+    <string name="revenue">revenue</string>
+
 </resources>
