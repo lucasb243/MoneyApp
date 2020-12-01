@@ -12,6 +12,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
+    private val transactionDB:SQLiteDatabase
+    private val dbHelper:TransactionDBHelper
+
+    init{
+        dbHelper = TransactionDBHelper(this)
+        transactionDB = dbHelper.writableDatabase
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -62,6 +71,10 @@ class MainActivity : AppCompatActivity() {
         //rvRecylerView.adapter = recyclerViewAdapter*/
 
 
+    }
+
+    private fun addTransactionItem(){
+        transactionDB.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
     }
 
     private fun setCurrentFragment(fragment: Fragment){

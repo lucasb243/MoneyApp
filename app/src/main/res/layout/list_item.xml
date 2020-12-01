@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TEST"
-        android:id="@+id/textView"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tvAmount"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"/>
 
-</LinearLayout>
+    <Linearlayout
+        android:layout_width="204dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="149dp"
+        android:layout_toEndOf="@+id/tvAmount"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCategorie"
+            android:layout_alignParentRight="true"
+            android:text="dd.mm.yyyy"
+            android:textSize="20sp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:id="@+id/tvCategorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvDate"
+            android:layout_alignParentRight="true"
+            android:text="CATEGORIE"
+            android:textSize="20sp"
+            android:layout_marginRight="20dp" />
+
+    </Linearlayout>
+
+</RelativeLayout>
