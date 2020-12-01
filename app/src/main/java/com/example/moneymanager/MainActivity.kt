@@ -1,9 +1,13 @@
 package com.example.moneymanager
 
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.Dataset
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -28,13 +32,36 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        var moneyData:SQLiteDatabase = this.openOrCreateDatabase("moneyData", MODE_PRIVATE, null)
-        moneyData.execSQL("CREATE TABLE IF NOT EXISTS revenues(type, amount, categorie, note, createdAt, editedAt)")
-        moneyData.execSQL("CREATE TABLE IF NOT EXISTS expenses(type, amount, categorie, note, createdAt, editedAt)")
 
+        var moneyData:SQLiteDatabase = this.openOrCreateDatabase("moneyData", MODE_PRIVATE, null)
+        moneyData.execSQL("CREATE TABLE IF NOT EXISTS transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, type, amount, categorie, note, createdAt, editedAt)")
+
+        
         for(i in 0..10){
-            moneyData.execSQL("INSERT INTO revenues (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
+
+            moneyData.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
         }
+
+
+        val rvRecylerView = findViewById<RecyclerView>(R.id.rvRecyclerView)
+
+/*        val c:Cursor= moneyData.rawQuery("SELECT * FROM transactions", null)
+        c.moveToFirst()
+        var transactionData = ArrayList<String>()
+*//*        do {
+            var amnt = c.getString(c.getColumnIndex("amount"))
+            var type1 = c.getString(c.getColumnIndex("type"))
+            var id = c.getString(c.getColumnIndex("id"))
+            var ergebnis = id+" "+amnt+" "+type1
+            transactionData.add(ergebnis)
+            c.moveToNext()
+        }while(c!=null)*//*
+
+        var transactionDataArray:Array<String> = transactionData.toTypedArray()
+        val recyclerViewAdapter = DatabaseAdapter(transactionDataArray)
+        //rvRecylerView.adapter = recyclerViewAdapter*/
+
+
     }
 
     private fun setCurrentFragment(fragment: Fragment){
