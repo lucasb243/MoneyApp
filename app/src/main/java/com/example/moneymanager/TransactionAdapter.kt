@@ -13,21 +13,21 @@ import java.time.LocalDate
 
 class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
-    inner class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var amountText:     TextView
+    inner class TransactionViewHolder(var itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var amountText = mContext.
         var dateText:       TextView
         var categorieText:  TextView
 
-        init {
-            amountText      = itemView.findViewById<TextView>(R.id.tvDate)
+        /*init {
+            amountText      = itemView.findViewById()
             dateText        = itemView.findViewById(R.id.textview_amount_item)
             categorieText   = itemView.findViewById(R.id.textview_amount_item)
-        }
+        }*/
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val inflater = LayoutInflater.from(mContext)
-        val view: View = inflater.inflate(R.layout., parent, false)
+        val view: View = inflater.inflate(R.layout.transaction_list_item, parent, false)
         return TransactionViewHolder(view)
     }
 

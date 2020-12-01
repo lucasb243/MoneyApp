@@ -5,8 +5,11 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.service.autofill.Dataset
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,11 +17,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private val transactionDB:SQLiteDatabase
-    private val dbHelper:TransactionDBHelper
+    private val dbHelper: TransactionDBHelper
+    private val adapter: TransactionAdapter
+    private val recyclerView: RecyclerView
 
     init{
         dbHelper = TransactionDBHelper(this)
         transactionDB = dbHelper.writableDatabase
+        adapter = TransactionAdapter(this, getAllItems())
+        recyclerView = findViewById<RecyclerView>(R.id.rvRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,41 +48,24 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-
-        var moneyData:SQLiteDatabase = this.openOrCreateDatabase("moneyData", MODE_PRIVATE, null)
-        moneyData.execSQL("CREATE TABLE IF NOT EXISTS transactions(id INTEGER PRIMARY KEY AUTOINCREMENT, type, amount, categorie, note, createdAt, editedAt)")
-
-        
-        for(i in 0..10){
-
-            moneyData.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
-        }
-
-
-        val rvRecylerView = findViewById<RecyclerView>(R.id.rvRecyclerView)
-
-/*        val c:Cursor= moneyData.rawQuery("SELECT * FROM transactions", null)
-        c.moveToFirst()
-        var transactionData = ArrayList<String>()
-*//*        do {
-            var amnt = c.getString(c.getColumnIndex("amount"))
-            var type1 = c.getString(c.getColumnIndex("type"))
-            var id = c.getString(c.getColumnIndex("id"))
-            var ergebnis = id+" "+amnt+" "+type1
-            transactionData.add(ergebnis)
-            c.moveToNext()
-        }while(c!=null)*//*
-
-        var transactionDataArray:Array<String> = transactionData.toTypedArray()
-        val recyclerViewAdapter = DatabaseAdapter(transactionDataArray)
-        //rvRecylerView.adapter = recyclerViewAdapter*/
-
-
+        var tv = findViewById<TextView>(R.id.tvAmount)
+        recyclerView.adapter = adapter
     }
 
     private fun addTransactionItem(){
         transactionDB.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
+        adapter.swapCursor(getAllItems())
+    }
+
+    private fun getAllItems():Cursor {
+        return transactionDB.query(
+                TransactionList.TransactionEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+        TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
     }
 
     private fun setCurrentFragment(fragment: Fragment){

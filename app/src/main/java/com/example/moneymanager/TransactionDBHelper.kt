@@ -9,7 +9,7 @@ import com.example.moneymanager.TransactionList.*
 class TransactionDBHelper(context: Context?) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
 
     companion object {
-        val DATABASE_NAME = "transactionlist.db"
+        val DATABASE_NAME = "transactionList.db"
         val DATABASE_VERSION = 1
     }
 
