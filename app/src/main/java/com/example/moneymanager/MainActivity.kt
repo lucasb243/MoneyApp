@@ -13,21 +13,12 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    private val transactionDB:SQLiteDatabase
-    private val dbHelper: TransactionDBHelper
-    private val adapter: TransactionAdapter
-    private val recyclerView: RecyclerView
-
-    init{
-        dbHelper = TransactionDBHelper(this)
-        transactionDB = dbHelper.writableDatabase
-        adapter = TransactionAdapter(this, getAllItems())
-        recyclerView = findViewById<RecyclerView>(R.id.rvRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-    }
+//    private var transactionDB:SQLiteDatabase? = null
+//    private var adapter:TransactionAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +39,26 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        var tv = findViewById<TextView>(R.id.tvAmount)
-        recyclerView.adapter = adapter
+
+
+        /*val dbHelper = TransactionDBHelper(this)
+        val transactionDB = dbHelper.writableDatabase
+
+        var recyclerView = findViewById<RecyclerView>(R.id.rvRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val adapter = TransactionAdapter(this, getAllItems())
+
+        recyclerView.adapter = adapter*/
     }
 
-    private fun addTransactionItem(){
-        transactionDB.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
-        adapter.swapCursor(getAllItems())
-    }
+    /*private fun addTransactionItem(){
+        transactionDB!!.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
+        adapter!!.swapCursor(getAllItems())
+    }*/
 
-    private fun getAllItems():Cursor {
-        return transactionDB.query(
+    /*private fun getAllItems():Cursor {
+        return transactionDB!!.query(
                 TransactionList.TransactionEntry.TABLE_NAME,
                 null,
                 null,
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 null,
                 null,
         TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
-    }
+    }*/
 
     private fun setCurrentFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().apply {

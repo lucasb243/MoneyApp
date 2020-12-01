@@ -1,6 +1,6 @@
 package com.example.moneymanager
 
-import android.R
+
 import android.content.Context
 import android.database.Cursor
 import android.view.LayoutInflater
@@ -8,26 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.time.LocalDate
 
 
 class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
-    inner class TransactionViewHolder(var itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var amountText = mContext.
-        var dateText:       TextView
-        var categorieText:  TextView
+    class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val amountText:     TextView
+        val dateText:       TextView
+        val categorieText:  TextView
 
-        /*init {
-            amountText      = itemView.findViewById()
-            dateText        = itemView.findViewById(R.id.textview_amount_item)
-            categorieText   = itemView.findViewById(R.id.textview_amount_item)
-        }*/
+        init {
+            amountText      = view.findViewById(com.example.moneymanager.R.id.tvAmount)
+            dateText        = view.findViewById(com.example.moneymanager.R.id.tvDate)
+            categorieText   = view.findViewById(com.example.moneymanager.R.id.tvCategorie)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val inflater = LayoutInflater.from(mContext)
-        val view: View = inflater.inflate(R.layout.transaction_list_item, parent, false)
+        val view: View = inflater.inflate(viewType, parent, false)
         return TransactionViewHolder(view)
     }
 
