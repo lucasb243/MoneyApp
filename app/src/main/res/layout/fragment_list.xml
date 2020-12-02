@@ -17,6 +17,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/white"
-        android:background="@drawable/rounded_list_item"/>
+        android:background="@drawable/rounded_recyclerview"
+        android:backgroundTint="@color/mainBlue"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

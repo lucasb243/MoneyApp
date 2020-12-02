@@ -12,21 +12,23 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
+    lateinit var mData:List<ListItem>
+
     class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val amountText:     TextView
         val dateText:       TextView
         val categorieText:  TextView
 
         init {
-            amountText      = view.findViewById(com.example.moneymanager.R.id.tvAmount)
-            dateText        = view.findViewById(com.example.moneymanager.R.id.tvDate)
-            categorieText   = view.findViewById(com.example.moneymanager.R.id.tvCategorie)
+            amountText      = view.findViewById(R.id.tvAmount)
+            dateText        = view.findViewById(R.id.tvDate)
+            categorieText   = view.findViewById(R.id.tvCategorie)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val inflater = LayoutInflater.from(mContext)
-        val view: View = inflater.inflate(viewType, parent, false)
+        val view: View = inflater.inflate(R.layout.transaction_list_item, parent, false)
         return TransactionViewHolder(view)
     }
 

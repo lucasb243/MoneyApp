@@ -27,8 +27,8 @@ class TransactionDBHelper(context: Context?) : SQLiteOpenHelper(context, DATABAS
                 TransactionEntry.COLUMN_AMOUNT.toString() + " INTEGER NOT NULL, " +
                 TransactionEntry.COLUMN_CATEGORIE.toString() + ", " +
                 TransactionEntry.COLUMN_NOTE.toString() + ", " +
-                TransactionEntry.COLUMN_CREATEDAT.toString() + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
-                TransactionEntry.COLUMN_EDITEDAT.toString() + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                TransactionEntry.COLUMN_CREATEDAT.toString() +", "+ // " TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                TransactionEntry.COLUMN_EDITEDAT.toString() + // TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 ");"
         db.execSQL(SQL_CREATE_GROCERYLIST_TABLE)
     }

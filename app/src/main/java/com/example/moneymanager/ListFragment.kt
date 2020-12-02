@@ -20,18 +20,11 @@ class ListFragment:Fragment(R.layout.fragment_list) {
         super.onCreate(savedInstanceState)
 
         val dbHelper = TransactionDBHelper(activity)
-        val transactionDB = dbHelper.writableDatabase
-
-        /*var recyclerView = view!!.findViewById<RecyclerView>(R.id.rvRecyclerView)//findViewById<RecyclerView>(R.id.rvRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(activity)*/
-
-      /*  val adapter = TransactionAdapter(activity!!, getAllItems())
-
-        recyclerView.adapter = adapter*/
+        transactionDB = dbHelper.writableDatabase
     }
 
     private fun addTransactionItem(){
-        transactionDB.execSQL("INSERT INTO transactions (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
+        transactionDB.execSQL("INSERT INTO transactionList (type, amount, categorie, createdAt) VALUES('r', 10, 'test', CURRENT_TIMESTAMP)")
         adapter.swapCursor(getAllItems())
     }
 
@@ -46,15 +39,17 @@ class ListFragment:Fragment(R.layout.fragment_list) {
                 TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
     }
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.transaction_list_item, container, false)
-        val rcyview = view.findViewById<RecyclerView>(R.id.rvRecyclerView)
-        rcyview.layoutManager = LinearLayoutManager(activity)
-        rcyview.adapter = TransactionAdapter(activity!!, getAllItems())
 
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
+        val rvRecyclerView = view.findViewById<RecyclerView>(R.id.rvRecyclerView)
+        rvRecyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = TransactionAdapter(activity!!, getAllItems())
+        rvRecyclerView.adapter = this.adapter
+
+        addTransactionItem() // inserting one row of test data
 
         return view
     }
