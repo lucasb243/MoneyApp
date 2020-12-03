@@ -3,16 +3,16 @@ package com.example.moneymanager
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 
 class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
-
-    lateinit var mData:List<ListItem>
 
     class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val amountText:     TextView
@@ -36,9 +36,13 @@ class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerV
         if (!mCursor.moveToPosition(position)) {
             return
         }
-        val amount: String      = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_AMOUNT))
+        var amount: String      = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_AMOUNT))
         val date: String        = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_CREATEDAT))
         val categorie: String   = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_CATEGORIE))
+        val type: String        = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_TYPE))
+        val _id: Float          = mCursor.getFloat(mCursor.getColumnIndex(TransactionList.TransactionEntry._ID))
+
+        amount = manipulateAmountView(holder,amount, type)
         holder.amountText.text  = amount
         holder.dateText.text    = date.toString()
         holder.categorieText.text = categorie
@@ -56,6 +60,24 @@ class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerV
         if (newCursor != null) {
             notifyDataSetChanged()
         }
+    }
+
+    private fun manipulateAmountView(holder:TransactionViewHolder, aAmount:String, type:String):String{
+        var amount=aAmount
+        if (type=="e"){
+            holder.amountText.setTextColor(ContextCompat.getColor(mContext,R.color.expense))
+            amount = "- "+amount
+        }else if (type=="ne"){
+            holder.amountText.setTextColor(ContextCompat.getColor(mContext,R.color.mainYellow))
+            amount = "- "+amount
+        }else if (type=="nr"){
+            holder.amountText.setTextColor(ContextCompat.getColor(mContext,R.color.mainYellow))
+            amount = "+ "+amount
+        }else{
+            amount = "+ "+amount
+            holder.amountText.setTextColor(ContextCompat.getColor(mContext,R.color.revenue))
+        }
+        return amount
     }
 
 }
