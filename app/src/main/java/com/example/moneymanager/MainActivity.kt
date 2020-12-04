@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.service.autofill.Dataset
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -32,11 +33,16 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setOnNavigationItemSelectedListener {
+            var ft: FragmentTransaction = this.supportFragmentManager.beginTransaction()
+
             when (it.itemId) {
-                R.id.pageHome -> setCurrentFragment(homeFragment)
-                R.id.pageList -> setCurrentFragment(listFragment)
-                R.id.pageProfile -> setCurrentFragment(profileFragment)
+                R.id.pageHome -> ft.replace(R.id.flFrameLayout, homeFragment) // setCurrentFragment(homeFragment)
+                R.id.pageList -> ft.replace(R.id.flFrameLayout, listFragment) //setCurrentFragment(listFragment)
+                R.id.pageProfile -> ft.replace(R.id.flFrameLayout, profileFragment) //setCurrentFragment(profileFragment)
             }
+           // ft.replace(R.id.flFrameLayout, AddItemFragment())
+            ft.addToBackStack(null)
+            ft.commit()
             true
         }
 

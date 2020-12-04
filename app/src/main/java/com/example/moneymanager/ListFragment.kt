@@ -10,14 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListFragment:Fragment(R.layout.fragment_list) {
 
-    private lateinit var transactionDB: SQLiteDatabase
-    private lateinit var adapter:TransactionAdapter
+    lateinit var transactionDB: SQLiteDatabase
+    lateinit var adapter:TransactionAdapter
     private lateinit var flActBtn:FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,10 +58,10 @@ class ListFragment:Fragment(R.layout.fragment_list) {
 
         addTransactionItem() // inserting one row of test data
         flActBtn.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().apply {
-                replace(R.id.flFrameLayout, AddItemFragment())
-                commit()
-            }
+            var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.flFrameLayout, AddItemFragment(transactionDB, adapter))
+                ft.addToBackStack(null)
+                ft.commit()
         }
         return view
     }

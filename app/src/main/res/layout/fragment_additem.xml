@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
 
     <LinearLayout
         android:id="@+id/llType"
@@ -15,10 +17,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="288dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        app:layout_constraintStart_toStartOf="parent">
         <ImageButton
             android:id="@+id/btnRevenue"
             android:layout_width="wrap_content"
@@ -53,23 +52,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        tools:layout_editor_absoluteY="288dp">
+        android:layout_marginTop="30dp">
 
         <TextView
             android:id="@+id/tvEnterAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Amount:"
             android:textStyle="bold"
             android:textSize="20dp"
             android:gravity="center"
+            android:padding="4dp"
             android:textColor="@color/mainBlue"
             android:fontFamily="@font/montserrat"
-            android:background="@drawable/rounded_bottom_nav"/>
+            android:background="@drawable/rounded_textview"/>
 
         <EditText
             android:id="@+id/etEnterAmount"
@@ -91,7 +88,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="288dp">
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tvEnterPayDate"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Date:"
+            android:textStyle="bold"
+            android:padding="4dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="@color/mainBlue"
+            android:fontFamily="@font/montserrat"
+            android:background="@drawable/rounded_textview"/>
 
         <EditText
             android:id="@+id/edEnterDate"
@@ -104,18 +115,32 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/llCategorie"
+        android:id="@+id/llCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="288dp">
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tvEnterCategory"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Category:"
+            android:padding="4dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="@color/mainBlue"
+            android:fontFamily="@font/montserrat"
+            android:background="@drawable/rounded_textview"/>
 
         <EditText
-            android:id="@+id/edEnterCategorie"
-            android:layout_width="match_parent"
+            android:id="@+id/edEnterCategory"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
@@ -131,7 +156,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="288dp">
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tvEnterNote"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Note:"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:padding="4dp"
+            android:gravity="center"
+            android:textColor="@color/mainBlue"
+            android:fontFamily="@font/montserrat"
+            android:background="@drawable/rounded_textview"/>
 
         <EditText
             android:id="@+id/edEnterNote"
@@ -151,7 +190,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="288dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/btnSbmt"
