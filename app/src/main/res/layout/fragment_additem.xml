@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Enter Amount"
-
+            android:gravity="end"
             android:inputType="numberDecimal" />
 
     </LinearLayout>
@@ -105,13 +105,14 @@
             android:background="@drawable/rounded_textview"/>
 
         <EditText
-            android:id="@+id/edEnterDate"
+            android:id="@+id/etEnterDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="Enter Payment Date"
-            android:inputType="date"/>
+            android:inputType="date"
+            android:gravity="end"/>
     </LinearLayout>
 
     <LinearLayout
@@ -139,12 +140,13 @@
             android:background="@drawable/rounded_textview"/>
 
         <EditText
-            android:id="@+id/edEnterCategory"
+            android:id="@+id/etEnterCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter Categorie" />
+            android:hint="Enter Category"
+            android:gravity="end"/>
 
     </LinearLayout>
 
@@ -173,12 +175,13 @@
             android:background="@drawable/rounded_textview"/>
 
         <EditText
-            android:id="@+id/edEnterNote"
+            android:id="@+id/etEnterNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter additional notes" />
+            android:hint="Enter additional notes"
+            android:gravity="end"/>
 
     </LinearLayout>
 
@@ -186,11 +189,11 @@
         android:id="@+id/llSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="5dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btnSbmt"
@@ -200,6 +203,14 @@
             android:text="SUBMIT" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvErrorDesciption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/mainRed"
+        android:textSize="20sp" />
 
 
 </LinearLayout>

@@ -9,7 +9,7 @@ class TransactionList {
         val _ID             = "_id"
         val COLUMN_TYPE     = "type"
         val COLUMN_AMOUNT   = "amount"
-        val COLUMN_CATEGORIE= "categorie"
+        val COLUMN_CATEGORIE= "category"
         val COLUMN_NOTE     = "note"
         val COLUMN_CREATEDAT= "createdAt"
         val COLUMN_EDITEDAT = "editedAt"

@@ -43,7 +43,7 @@ class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerV
         val _id: Float          = mCursor.getFloat(mCursor.getColumnIndex(TransactionList.TransactionEntry._ID))
 
         amount = manipulateAmountView(holder,amount, type)
-        holder.amountText.text  = amount
+        holder.amountText.text  = amount + "€"
         holder.dateText.text    = date.toString()
         holder.categorieText.text = categorie
     }

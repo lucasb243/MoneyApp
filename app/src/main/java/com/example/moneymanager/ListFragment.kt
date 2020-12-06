@@ -28,11 +28,11 @@ class ListFragment:Fragment(R.layout.fragment_list) {
         transactionDB = dbHelper.writableDatabase
     }
 
-    private fun addTransactionItem(){
+    /*private fun addTransactionItem(){
         var a:Int = 1
         transactionDB.execSQL("INSERT INTO transactionList (type, amount, categorie, createdAt) VALUES('r', ${a}, 'test', CURRENT_TIMESTAMP)")
         adapter.swapCursor(getAllItems())
-    }
+    }*/
 
     private fun getAllItems(): Cursor {
         return transactionDB!!.query(
@@ -51,12 +51,12 @@ class ListFragment:Fragment(R.layout.fragment_list) {
 
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         val rvRecyclerView = view.findViewById<RecyclerView>(R.id.rvRecyclerView)
-        flActBtn = view.findViewById(R.id.floatingActionButton)
+
         rvRecyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = TransactionAdapter(activity!!, getAllItems())
         rvRecyclerView.adapter = this.adapter
 
-        addTransactionItem() // inserting one row of test data
+        flActBtn = view.findViewById(R.id.floatingActionButton)
         flActBtn.setOnClickListener {
             var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
                 ft.replace(R.id.flFrameLayout, AddItemFragment(transactionDB, adapter))

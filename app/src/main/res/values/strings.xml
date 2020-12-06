@@ -3,5 +3,6 @@
     <string name="app_name">MoneyManager</string>
     <string name="expense">expense</string>
     <string name="revenue">revenue</string>
+    <string name="currency">€</string>
 
 </resources>
