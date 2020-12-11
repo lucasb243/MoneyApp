@@ -4,7 +4,7 @@
     android:color="?attr/colorControlHighlight">
     <solid android:color="#ffffff" />
     <corners
-        android:radius="50dp"/>
+        android:radius="20dp"/>
     <stroke
         android:width="0dp"
         android:color="@color/mainYellow" />

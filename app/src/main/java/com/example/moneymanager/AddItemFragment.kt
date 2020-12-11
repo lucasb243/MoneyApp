@@ -53,16 +53,16 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
     }
 
     private fun addTransactionItem(type: String, amountNew: Float, category:String, createdAt: String, note:String?){
-        Log.i("amount", "${amountNew}")
+        Log.i("amount", "$amountNew")
         //var amountNew:Float = roundTwoDecimals(amount)
-        Log.i("value of note:", "${note}")
+        Log.i("value of note:", "$note")
         if (note!=""){
             transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt, note) VALUES ('r', ${amountNew}, '${category}', '${createdAt}', '${note}')")
         }else{
             transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES ('r', ${amountNew}, '${category}', '${createdAt}')")
         }
         adapter.swapCursor(getAllItems())
-        Log.i("TEST", "Worked")
+        activity!!.supportFragmentManager.popBackStack()
     }
 
     private fun getAllItems(): Cursor {
@@ -100,14 +100,14 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
         return formatted.substring(0, 10)+" "+formatted.substring(11, 16)
     }
 
-    fun limitDecimals(text:String):String{
+    private fun limitDecimals(text:String):String{
         val format = DecimalFormat("##.##")
         return format.format(text)
     }
 
-    fun checkOnClickSubmit():Boolean{
+    private fun checkOnClickSubmit():Boolean{
         tvErrorDesc.text =""
-        if(CategoryEnum.values().any{ it.name == etEtrCtgry.text}){
+        if(CategoryEnum.values().any{ it.name == etEtrCtgry.text.toString()}){
             if(etEtrAmount.text != "" && etEtrDate.text!= ""){
                 return true
             }else{

@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:backgroundTint="@color/mainYellow">
+    android:backgroundTint="@color/mainYellow"
+    tools:context=".MainActivity">
 
   <!--  <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -14,26 +14,25 @@
         android:id="@+id/rvRecyclerView1"
         android:background="@drawable/rounded_list_item"/>
 -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app2:menu="@menu/bottom_nav_bar"
-        android:background="@drawable/rounded_bottom_nav"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/bottomNavigationView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/rounded_bottom_nav"
+      app2:menu="@menu/bottom_nav_bar"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/flFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+  <FrameLayout
+      android:id="@+id/flFrameLayout"
+      app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"
+      app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+  </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
