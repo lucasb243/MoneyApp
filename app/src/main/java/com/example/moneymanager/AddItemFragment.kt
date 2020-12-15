@@ -2,6 +2,7 @@ package com.example.moneymanager
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -20,15 +22,16 @@ import kotlin.math.round
 
 class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: TransactionAdapter):Fragment(R.layout.fragment_additem) {
 
-    private lateinit var btnRevenue     :ImageButton
-    private lateinit var btnExpense     :ImageButton
-    private lateinit var btnNeutral     :ImageButton
-    private lateinit var etEtrAmount    :TextView
-    private lateinit var etEtrDate      :TextView
-    private lateinit var etEtrCtgry     :TextView
-    private lateinit var etEtrNote      :TextView
-    private lateinit var tvErrorDesc    :TextView
-    private lateinit var btnSbmt        :Button
+    private lateinit var btnRevenue         :ImageButton
+    private lateinit var btnExpense         :ImageButton
+    private lateinit var btnNeutralExpense  :ImageButton
+    private lateinit var etEtrAmount        :TextView
+    private lateinit var etEtrDate          :TextView
+    private lateinit var etEtrCtgry         :TextView
+    private lateinit var etEtrNote          :TextView
+    private lateinit var tvErrorDesc        :TextView
+    private lateinit var btnSbmt            :Button
+    private var          type               :String     = "empty"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,30 +41,29 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
                               savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_additem, container, false)
-        /*adapter = TransactionAdapter(activity!!,getAllItems())
-        val dbHelper = TransactionDBHelper(activity)
-        transactionDB = dbHelper.writableDatabase*/
 
         setUpViews(view)
+
         btnSbmt.setOnClickListener {
            if(checkOnClickSubmit()) {
-                addTransactionItem("r", etEtrAmount.text.toString().toFloat(), etEtrCtgry.text.toString(), etEtrDate.text.toString(), etEtrNote.text.toString())
+                addTransactionItem(type, etEtrAmount.text.toString().toFloat(), etEtrCtgry.text.toString(), etEtrDate.text.toString(), etEtrNote.text.toString())
             }
         }
+
+        setImgBtnOnClick()
 
         return view
     }
 
     private fun addTransactionItem(type: String, amountNew: Float, category:String, createdAt: String, note:String?){
-        Log.i("amount", "$amountNew")
-        //var amountNew:Float = roundTwoDecimals(amount)
-        Log.i("value of note:", "$note")
         if (note!=""){
-            transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt, note) VALUES ('r', ${amountNew}, '${category}', '${createdAt}', '${note}')")
+            transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt, note) VALUES ('${type}', ${amountNew}, '${category}', '${createdAt}', '${note}')")
+            adapter.swapCursor(getAllItems())
         }else{
-            transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES ('r', ${amountNew}, '${category}', '${createdAt}')")
+            transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES ('${type}', ${amountNew}, '${category}', '${createdAt}')")
+            adapter.swapCursor(getAllItems())
         }
-        adapter.swapCursor(getAllItems())
+
         activity!!.supportFragmentManager.popBackStack()
     }
 
@@ -77,17 +79,15 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
     }
 
     private fun setUpViews(view: View){
-        btnRevenue  = view.findViewById(R.id.btnRevenue)
-        btnExpense  = view.findViewById(R.id.btnExpense)
-        btnNeutral  = view.findViewById(R.id.btnNeutralExpense)
-        etEtrAmount = view.findViewById(R.id.etEnterAmount)
-        //etEtrAmount.text = limitDecimals(etEtrAmount.text.toString())
-        etEtrCtgry  = view.findViewById(R.id.etEnterCategory)
-        etEtrDate   = view.findViewById(R.id.etEnterDate)
-
-        etEtrDate.text = getCurrentTime()
-        etEtrNote   = view.findViewById(R.id.etEnterNote)
-        btnSbmt     = view.findViewById(R.id.btnSbmt)
+        btnRevenue          = view.findViewById(R.id.btnRevenue)
+        btnExpense          = view.findViewById(R.id.btnExpense)
+        btnNeutralExpense   = view.findViewById(R.id.btnNeutralExpense)
+        etEtrAmount         = view.findViewById(R.id.etEnterAmount)
+        etEtrCtgry          = view.findViewById(R.id.etEnterCategory)
+        etEtrDate           = view.findViewById(R.id.etEnterDate)
+        etEtrDate.text      = getCurrentTime()
+        etEtrNote           = view.findViewById(R.id.etEnterNote)
+        btnSbmt             = view.findViewById(R.id.btnSbmt)
 
         tvErrorDesc = view.findViewById(R.id.tvErrorDesciption)
     }
@@ -107,16 +107,39 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
 
     private fun checkOnClickSubmit():Boolean{
         tvErrorDesc.text =""
-        if(CategoryEnum.values().any{ it.name == etEtrCtgry.text.toString()}){
-            if(etEtrAmount.text != "" && etEtrDate.text!= ""){
-                return true
-            }else{
-                tvErrorDesc.text="Error with amount or date!"
+        if(type !="empty") {
+            if (CategoryEnum.values().any { it.name == etEtrCtgry.text.toString() }) {
+                if (etEtrAmount.text.toString() != "" && etEtrDate.text.toString() != "") {
+                    return true
+                } else {
+                    tvErrorDesc.text = "Error with amount or date!"
+                }
+            } else {
+                tvErrorDesc.text = "Error with your category!"
             }
-        }else{
-            tvErrorDesc.text="Error with your category!"
         }
         return false
+    }
+
+    private fun setImgBtnOnClick(){
+        btnRevenue.setOnClickListener {
+            btnRevenue.setBackgroundResource(R.drawable.rounded_imagebutton_clicked)
+            btnExpense.setBackgroundResource(R.drawable.rounded_imagebutton)
+            btnNeutralExpense.setBackgroundResource(R.drawable.rounded_imagebutton)
+            type = "r" // Revenue
+        }
+        btnExpense.setOnClickListener {
+            btnExpense.setBackgroundResource(R.drawable.rounded_imagebutton_clicked)
+            btnRevenue.setBackgroundResource(R.drawable.rounded_imagebutton)
+            btnNeutralExpense.setBackgroundResource(R.drawable.rounded_imagebutton)
+            type = "e" // Expense
+        }
+        btnNeutralExpense.setOnClickListener {
+            btnNeutralExpense.setBackgroundResource(R.drawable.rounded_imagebutton_clicked)
+            btnExpense.setBackgroundResource(R.drawable.rounded_imagebutton)
+            btnRevenue.setBackgroundResource(R.drawable.rounded_imagebutton)
+            type = "ne"
+        }
     }
 
     /*private fun roundTwoDecimals(float: Float): Float {

@@ -25,24 +25,21 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:src="@drawable/ic_add_flbutton"
-            android:background="@drawable/rounded_list_item"
-            android:backgroundTint="@color/mainBlue"/>
+            android:background="@drawable/rounded_imagebutton"/>
         <ImageButton
             android:id="@+id/btnExpense"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_list_item"
-            android:src="@drawable/ic_expense"
-            android:backgroundTint="@color/mainBlue"/>
+            android:background="@drawable/rounded_imagebutton"
+            android:src="@drawable/ic_expense"/>
         <ImageButton
             android:id="@+id/btnNeutralExpense"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_list_item"
-            android:src="@drawable/ic_neutral"
-            android:backgroundTint="@color/mainBlue"/>
+            android:background="@drawable/rounded_imagebutton"
+            android:src="@drawable/ic_neutral" />
     </LinearLayout>
 
     <LinearLayout
@@ -72,11 +69,11 @@
         <EditText
             android:id="@+id/etEnterAmount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter Amount"
             android:gravity="end"
+            android:hint="Enter Amount"
             android:inputType="numberDecimal" />
 
     </LinearLayout>
@@ -146,8 +143,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter Category"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:hint="Enter Category" />
 
     </LinearLayout>
 

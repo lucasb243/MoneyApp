@@ -7,5 +7,6 @@ enum class CategoryEnum {
     STEUERN,
     VERSICHERUNG,
     LOHN,
-    KRAFTSTOFF
+    KRAFTSTOFF,
+    X
 }

@@ -55,6 +55,7 @@ class ListFragment:Fragment(R.layout.fragment_list) {
         rvRecyclerView.layoutManager = LinearLayoutManager(activity)
         adapter = TransactionAdapter(activity!!, getAllItems())
         rvRecyclerView.adapter = this.adapter
+        rvRecyclerView.addItemDecoration(MarginItemDecoration(10))
 
         flActBtn = view.findViewById(R.id.floatingActionButton)
         flActBtn.setOnClickListener {

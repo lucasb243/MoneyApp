@@ -26,6 +26,8 @@
 
   <FrameLayout
       android:id="@+id/flFrameLayout"
+      android:layout_height="0dp"
+      android:layout_width="match_parent"
       app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"
       app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
       app:layout_constraintEnd_toEndOf="parent"
