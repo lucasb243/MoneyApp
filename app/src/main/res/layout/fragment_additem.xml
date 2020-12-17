@@ -52,6 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="30dp">
 
+
         <TextView
             android:id="@+id/tvEnterAmount"
             android:layout_width="30dp"
@@ -59,9 +60,9 @@
             android:layout_weight="1"
             android:text="Amount:"
             android:textStyle="bold"
+            android:padding="4dp"
             android:textSize="20dp"
             android:gravity="center"
-            android:padding="4dp"
             android:textColor="@color/mainBlue"
             android:fontFamily="@font/montserrat"
             android:background="@drawable/rounded_textview"/>
@@ -69,7 +70,7 @@
         <EditText
             android:id="@+id/etEnterAmount"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:gravity="end"
