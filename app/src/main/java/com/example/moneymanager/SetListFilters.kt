@@ -31,7 +31,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_additem, container, false)
+        val view = inflater.inflate(R.layout.fragment_set_list_filters, container, false)
 
         setUpViews(view)
 

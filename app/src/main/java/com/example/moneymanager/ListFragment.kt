@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -19,6 +20,7 @@ class ListFragment:Fragment(R.layout.fragment_list) {
 
     lateinit var transactionDB: SQLiteDatabase
     lateinit var adapter:TransactionAdapter
+    private lateinit var filterBtn:ImageButton
     private lateinit var flActBtn:FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +65,14 @@ class ListFragment:Fragment(R.layout.fragment_list) {
                 ft.replace(R.id.flFrameLayout, AddItemFragment(transactionDB, adapter))
                 ft.addToBackStack(null)
                 ft.commit()
+        }
+
+        filterBtn=view.findViewById(R.id.ibFilterBtn)
+        filterBtn.setOnClickListener {
+            var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            ft.replace(R.id.flFrameLayout, SetListFilters(transactionDB, adapter))
+            ft.addToBackStack(null)
+            ft.commit()
         }
         return view
     }
