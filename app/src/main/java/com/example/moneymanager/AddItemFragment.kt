@@ -8,9 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import java.math.RoundingMode
@@ -27,9 +25,10 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
     private lateinit var btnNeutralExpense  :ImageButton
     private lateinit var etEtrAmount        :TextView
     private lateinit var etEtrDate          :TextView
-    private lateinit var etEtrCtgry         :TextView
+    //private lateinit var etEtrCtgry         :TextView
     private lateinit var etEtrNote          :TextView
     private lateinit var tvErrorDesc        :TextView
+    private lateinit var acTextView         : AutoCompleteTextView
     private lateinit var btnSbmt            :Button
     private var          type               :String     = "empty"
 
@@ -46,12 +45,11 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
 
         btnSbmt.setOnClickListener {
            if(checkOnClickSubmit()) {
-                addTransactionItem(type, etEtrAmount.text.toString().toFloat(), etEtrCtgry.text.toString(), etEtrDate.text.toString(), etEtrNote.text.toString())
+                addTransactionItem(type, etEtrAmount.text.toString().toFloat(), acTextView.text.toString(), etEtrDate.text.toString(), etEtrNote.text.toString())
             }
         }
-
         setImgBtnOnClick()
-
+        acTextView.setAdapter(ArrayAdapter<CategoryEnum>(activity!!, android.R.layout.simple_list_item_1, CategoryEnum.values()))
         return view
     }
 
@@ -83,12 +81,12 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
         btnExpense          = view.findViewById(R.id.btnExpense)
         btnNeutralExpense   = view.findViewById(R.id.btnNeutralExpense)
         etEtrAmount         = view.findViewById(R.id.etEnterAmount)
-        etEtrCtgry          = view.findViewById(R.id.etEnterCategory)
+        //etEtrCtgry          = view.findViewById(R.id.etEnterCategory)
         etEtrDate           = view.findViewById(R.id.etEnterDate)
         etEtrDate.text      = getCurrentTime()
         etEtrNote           = view.findViewById(R.id.etEnterNote)
         btnSbmt             = view.findViewById(R.id.btnSbmt)
-
+        acTextView          = view.findViewById(R.id.acTv)
         tvErrorDesc = view.findViewById(R.id.tvErrorDesciption)
     }
 
@@ -108,7 +106,7 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
     private fun checkOnClickSubmit():Boolean{
         tvErrorDesc.text =""
         if(type !="empty") {
-            if (CategoryEnum.values().any { it.name == etEtrCtgry.text.toString() }) {
+            if (CategoryEnum.values().any { it.name == acTextView.text.toString() }) {
                 if (etEtrAmount.text.toString() != "" && etEtrDate.text.toString() != "") {
                     return true
                 } else {
@@ -117,6 +115,8 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
             } else {
                 tvErrorDesc.text = "Error with your category!"
             }
+        }else{
+            tvErrorDesc.text = "Please select a type first!"
         }
         return false
     }

@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
+import kotlin.random.Random.Default.nextFloat
 
 class ListFragment:Fragment(R.layout.fragment_list) {
 
@@ -28,13 +30,27 @@ class ListFragment:Fragment(R.layout.fragment_list) {
 
         val dbHelper = TransactionDBHelper(activity)
         transactionDB = dbHelper.writableDatabase
+
     }
 
-    /*private fun addTransactionItem(){
-        var a:Int = 1
-        transactionDB.execSQL("INSERT INTO transactionList (type, amount, categorie, createdAt) VALUES('r', ${a}, 'test', CURRENT_TIMESTAMP)")
-        adapter.swapCursor(getAllItems())
-    }*/
+    private fun addRandomTransactionItem() {
+        var a = 1234.56
+        for (i in 0..10) {
+            if(i%2==0){
+            transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES('r', ${a}, 'K', CURRENT_TIMESTAMP)")
+            adapter.swapCursor(getAllItems())
+            }else if(i%5==0){
+                transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES('ne', ${a}, 'K', CURRENT_TIMESTAMP)")
+                adapter.swapCursor(getAllItems())
+            }else if(i%6==0){
+                transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES('ne', ${a}, 'K', CURRENT_TIMESTAMP)")
+                adapter.swapCursor(getAllItems())
+            }else{
+                transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES('e', ${a}, 'K', CURRENT_TIMESTAMP)")
+                adapter.swapCursor(getAllItems())
+            }
+        }
+    }
 
     private fun getAllItems(): Cursor {
         return transactionDB!!.query(
@@ -74,6 +90,7 @@ class ListFragment:Fragment(R.layout.fragment_list) {
             ft.addToBackStack(null)
             ft.commit()
         }
+        addRandomTransactionItem()
         return view
     }
 }

@@ -75,6 +75,7 @@
             android:ems="10"
             android:gravity="end"
             android:hint="Enter Amount"
+            android:fontFamily="@font/montserrat"
             android:inputType="numberDecimal" />
 
     </LinearLayout>
@@ -109,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/montserrat"
             android:hint="Enter Payment Date"
             android:inputType="date"
             android:gravity="end"/>
@@ -138,14 +140,17 @@
             android:fontFamily="@font/montserrat"
             android:background="@drawable/rounded_textview"/>
 
-        <EditText
-            android:id="@+id/etEnterCategory"
+        <com.example.moneymanager.InstantAutoComplete
+            android:id="@+id/acTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:gravity="end"
-            android:hint="Enter Category" />
+            android:hint="Enter Category"
+            android:fontFamily="@font/montserrat"
+            android:completionThreshold="0"
+            />
 
     </LinearLayout>
 
@@ -178,6 +183,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
             android:ems="10"
             android:hint="Enter additional notes"
             android:gravity="end"/>
@@ -198,6 +204,7 @@
             android:id="@+id/btnSbmt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
             android:layout_gravity="center"
             android:text="SUBMIT" />
 
@@ -206,6 +213,7 @@
     <TextView
         android:id="@+id/tvErrorDesciption"
         android:layout_width="match_parent"
+        android:fontFamily="@font/montserrat"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textColor="@color/mainRed"
