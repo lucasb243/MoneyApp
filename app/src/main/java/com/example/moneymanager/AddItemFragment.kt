@@ -25,10 +25,9 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
     private lateinit var btnNeutralExpense  :ImageButton
     private lateinit var etEtrAmount        :TextView
     private lateinit var etEtrDate          :TextView
-    //private lateinit var etEtrCtgry         :TextView
     private lateinit var etEtrNote          :TextView
     private lateinit var tvErrorDesc        :TextView
-    private lateinit var acTextView         : AutoCompleteTextView
+    private lateinit var acTextView         :AutoCompleteTextView
     private lateinit var btnSbmt            :Button
     private var          type               :String     = "empty"
 

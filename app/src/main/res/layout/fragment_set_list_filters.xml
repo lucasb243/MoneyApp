@@ -14,58 +14,160 @@
         android:gravity="center"
         android:text="Set your filters\nhere :)"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST"
-        android:background="@drawable/rounded_textview"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llType"
-        app:layout_constraintVertical_bias="0.374" />
-
     <LinearLayout
-        android:id="@+id/llType"
+        android:id="@+id/llPeriodFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="4dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/tvHelloFilter">
 
-        <Button
-            android:id="@+id/btnWeek"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnWeekFilter"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:textColor="@color/mainBlue1"
-            android:fontFamily="@font/montserrat"
             android:background="@drawable/rounded_select_button"
-            android:text="Year" />
+            android:fontFamily="@font/montserrat"
+            android:text="Week"
+            android:tag="notPressed"
+            android:textColor="@color/mainBlue" />
 
-        <Button
-            android:id="@+id/btnMonth"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMonthFilter"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:tag="notPressed"
             android:background="@drawable/rounded_select_button"
             android:fontFamily="@font/montserrat"
-            android:text="Month" />
+            android:text="Month"
+            android:textColor="@color/mainBlue" />
 
-        <Button
-            android:id="@+id/btnYear"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnYearFilter"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:tag="notPressed"
             android:background="@drawable/rounded_select_button"
             android:fontFamily="@font/montserrat"
-            android:text="Year" />
+            android:text="Year"
+            android:textColor="@color/mainBlue" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTypeFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginVertical="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/llPeriodFilter">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRevenueFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:tag="notPressed"
+            android:background="@drawable/rounded_select_button"
+            android:fontFamily="@font/montserrat"
+            android:text="Revenue"
+            android:textColor="@color/mainBlue" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExpenseFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_select_button"
+            android:fontFamily="@font/montserrat"
+            android:tag="notPressed"
+            android:text="Expense"
+            android:textColor="@color/mainBlue" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNeutralFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_select_button"
+            android:fontFamily="@font/montserrat"
+            android:tag="notPressed"
+            android:text="Neutral"
+            android:textColor="@color/mainBlue" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llAmountFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginVertical="15dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/llTypeFilter">
+
+        <LinearLayout
+            android:id="@+id/llAmountDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/llTypeFilter">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Filter amount"
+                android:textColor="@color/mainBlue1"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/tvFilterAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="default"
+                android:textColor="@color/mainBlue1"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/mainBlue"
+            android:thumbTint="@color/mainBlue"
+            tools:layout_editor_absoluteX="128dp" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gvCategoryFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/llAmountFilter" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSbmtFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/rounded_imagebutton"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gvCategoryFilter" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
