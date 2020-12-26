@@ -20,16 +20,16 @@ import kotlin.math.round
 
 class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: TransactionAdapter):Fragment(R.layout.fragment_additem) {
 
-    private lateinit var btnRevenue         :ImageButton
-    private lateinit var btnExpense         :ImageButton
-    private lateinit var btnNeutralExpense  :ImageButton
-    private lateinit var etEtrAmount        :TextView
-    private lateinit var etEtrDate          :TextView
-    private lateinit var etEtrNote          :TextView
-    private lateinit var tvErrorDesc        :TextView
-    private lateinit var acTextView         :AutoCompleteTextView
-    private lateinit var btnSbmt            :Button
-    private var          type               :String     = "empty"
+    private lateinit var btnRevenue         : ImageButton
+    private lateinit var btnExpense         : ImageButton
+    private lateinit var btnNeutralExpense  : ImageButton
+    private lateinit var etEtrAmount        : TextView
+    private lateinit var etEtrDate          : TextView
+    private lateinit var etEtrNote          : TextView
+    private lateinit var tvErrorDesc        : TextView
+    private lateinit var acTextView         : AutoCompleteTextView
+    private lateinit var btnSbmt            : Button
+    private var          type               : String     = "empty"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

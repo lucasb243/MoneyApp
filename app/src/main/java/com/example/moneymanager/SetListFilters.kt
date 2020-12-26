@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 
 class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: TransactionAdapter):Fragment(R.layout.fragment_set_list_filters) {
 
-    private lateinit var gridView           :GridView
+    private lateinit var gridView           : GridView
     private lateinit var btnYearFilter      : Button
     private lateinit var btnMonthFilter     : Button
     private lateinit var btnWeekFilter      : Button
@@ -24,7 +24,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
     private lateinit var btnExpeneseFilter  : Button
     private lateinit var btnNeutralFilter   : Button
     private lateinit var tvShowAmountFilter : TextView
-    private lateinit var sbAmountFilters     : SeekBar
+    private lateinit var sbAmountFilters    : SeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
