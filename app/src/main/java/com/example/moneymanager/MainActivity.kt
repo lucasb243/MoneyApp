@@ -4,6 +4,8 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.service.autofill.Dataset
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -16,10 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity(), Communicator, Parcelable {
 
 //    private var transactionDB:SQLiteDatabase? = null
 //    private var adapter:TransactionAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,5 +82,28 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.flFrameLayout, fragment)
             commit()
         }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+    override fun passDataCom(cursor: Cursor) {
+        var bundle = Bundle()
+        bundle.put
     }
 }

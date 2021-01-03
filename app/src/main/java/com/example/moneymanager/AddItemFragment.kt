@@ -55,10 +55,8 @@ class AddItemFragment(var transactionDB: SQLiteDatabase, var adapter: Transactio
     private fun addTransactionItem(type: String, amountNew: Float, category:String, createdAt: String, note:String?){
         if (note!=""){
             transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt, note) VALUES ('${type}', ${amountNew}, '${category}', '${createdAt}', '${note}')")
-            adapter.swapCursor(getAllItems())
         }else{
             transactionDB.execSQL("INSERT INTO transactionList (type, amount, category, createdAt) VALUES ('${type}', ${amountNew}, '${category}', '${createdAt}')")
-            adapter.swapCursor(getAllItems())
         }
 
         activity!!.supportFragmentManager.popBackStack()

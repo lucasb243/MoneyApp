@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 
@@ -23,6 +24,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
     private lateinit var btnRevenueFilter   : Button
     private lateinit var btnExpeneseFilter  : Button
     private lateinit var btnNeutralFilter   : Button
+    private lateinit var btnSbmtFilter      : Button
     private lateinit var tvShowAmountFilter : TextView
     private lateinit var sbAmountFilters    : SeekBar
 
@@ -37,6 +39,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
 
         setUpViews(view)
         setUpButtonOnclick()
+        setUpSeekbar()
 
         val arrayAdapter: ArrayAdapter<CategoryEnum> = ArrayAdapter<CategoryEnum>(activity!!, android.R.layout.simple_list_item_multiple_choice, CategoryEnum.values())
 
@@ -48,15 +51,22 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         /*gridView.setOnItemClickListener(OnItemClickListener { a, v, position, id ->
             val o: Any = gridView.getItemAtPosition(position)
         })*/
+
+
         return view
     }
 
-    private fun getAllItems(): Cursor {
+    private fun upDateQueryForDB(){
+
+    }
+
+    private fun getAllItemsNeu(): Cursor {
+        val selArgs = arrayOf("r")
         return transactionDB!!.query(
                 TransactionList.TransactionEntry.TABLE_NAME,
                 null,
-                null,
-                null,
+                "type = ?",
+                selArgs,
                 null,
                 null,
                 TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
@@ -69,6 +79,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         btnWeekFilter       = view.findViewById(R.id.btnWeekFilter)
         btnNeutralFilter    = view.findViewById(R.id.btnNeutralFilter)
         btnRevenueFilter    = view.findViewById(R.id.btnRevenueFilter)
+        btnSbmtFilter       = view.findViewById(R.id.btnSbmtFilter)
         btnYearFilter       = view.findViewById(R.id.btnYearFilter)
         sbAmountFilters     = view.findViewById(R.id.seekBar)
         tvShowAmountFilter  = view.findViewById(R.id.tvFilterAmount)
@@ -81,6 +92,10 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         btnNeutralFilter.setOnClickListener { changeButtonAppearance(btnNeutralFilter) }
         btnRevenueFilter.setOnClickListener { changeButtonAppearance(btnRevenueFilter) }
         btnYearFilter.setOnClickListener { changeButtonAppearance(btnYearFilter) }
+        btnSbmtFilter.setOnClickListener{
+            listFragment.mCursorFilter = getAllItemsNeu()
+            activity!!.supportFragmentManager.popBackStack()
+        }
     }
 
     private fun changeButtonAppearance(button:Button) {
@@ -90,9 +105,31 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
             button.tag = "pressed"
         }else{
             button.setBackgroundResource(R.drawable.rounded_select_button)
-            button.setTextColor(R.color.mainBlue.toInt())
+            button.setTextColor(ContextCompat.getColor(context!!,R.color.mainBlue))
             button.tag  ="notPressed"
         }
+    }
+
+    private fun setUpSeekbar(){
+        sbAmountFilters.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                // Display the current progress of SeekBar
+                tvShowAmountFilter.text = "< $i"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // Do something
+                //Toast.makeText(context!!,"start tracking",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // Do something
+                //Toast.makeText(context!!,"stop tracking",Toast.LENGTH_SHORT).show()
+                if(tvShowAmountFilter.text.toString()=="< 0"){
+                    tvShowAmountFilter.text = "none"
+                }
+            }
+        })
     }
 
 }

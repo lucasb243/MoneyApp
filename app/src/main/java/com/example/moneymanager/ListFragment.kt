@@ -20,16 +20,19 @@ import kotlin.random.Random.Default.nextFloat
 
 class ListFragment:Fragment(R.layout.fragment_list) {
 
-    lateinit var transactionDB: SQLiteDatabase
-    lateinit var adapter:TransactionAdapter
-    private lateinit var filterBtn:ImageButton
-    private lateinit var flActBtn:FloatingActionButton
+    lateinit var transactionDB      : SQLiteDatabase
+    lateinit var adapter            : TransactionAdapter
+    private lateinit var filterBtn  : ImageButton
+    private lateinit var flActBtn   : FloatingActionButton
+    var mCursorFilter       : Cursor?    = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val dbHelper = TransactionDBHelper(activity)
         transactionDB = dbHelper.writableDatabase
+
+        adapter = TransactionAdapter(activity!!, getAllItems())
 
     }
 
@@ -71,8 +74,12 @@ class ListFragment:Fragment(R.layout.fragment_list) {
         val rvRecyclerView = view.findViewById<RecyclerView>(R.id.rvRecyclerView)
 
         rvRecyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter = TransactionAdapter(activity!!, getAllItems())
+
+        if(mCursorFilter!=null){
+            adapter.swapCursor(mCursorFilter!!)
+        }
         rvRecyclerView.adapter = this.adapter
+
         rvRecyclerView.addItemDecoration(MarginItemDecoration(10))
 
         flActBtn = view.findViewById(R.id.floatingActionButton)

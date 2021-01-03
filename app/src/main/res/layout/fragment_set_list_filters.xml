@@ -127,18 +127,18 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="Filter amount"
+                android:text="Filter amount:"
                 android:textColor="@color/mainBlue1"
-                android:textSize="15dp" />
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/tvFilterAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="default"
+                android:text="none"
                 android:textColor="@color/mainBlue1"
-                android:textSize="15dp" />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <SeekBar
@@ -147,6 +147,7 @@
             android:layout_height="wrap_content"
             android:progressTint="@color/mainBlue"
             android:thumbTint="@color/mainBlue"
+            android:max="500"
             tools:layout_editor_absoluteX="128dp" />
     </LinearLayout>
 
