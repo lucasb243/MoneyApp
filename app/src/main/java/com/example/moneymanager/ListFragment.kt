@@ -3,20 +3,17 @@ package com.example.moneymanager
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.text.TextUtils.replace
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
-import kotlin.random.Random.Default.nextFloat
 
 class ListFragment:Fragment(R.layout.fragment_list) {
 
@@ -24,7 +21,8 @@ class ListFragment:Fragment(R.layout.fragment_list) {
     lateinit var adapter            : TransactionAdapter
     private lateinit var filterBtn  : ImageButton
     private lateinit var flActBtn   : FloatingActionButton
-    var mCursorFilter       : Cursor?    = null
+    private lateinit var viewModel  : SharedViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +32,15 @@ class ListFragment:Fragment(R.layout.fragment_list) {
 
         adapter = TransactionAdapter(activity!!, getAllItems())
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel.getFilterCursor().observe(viewLifecycleOwner, androidx.lifecycle.Observer { cursor ->
+            adapter.swapCursor(cursor)
+        })
     }
 
     private fun addRandomTransactionItem() {
@@ -75,9 +82,9 @@ class ListFragment:Fragment(R.layout.fragment_list) {
 
         rvRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        if(mCursorFilter!=null){
-            adapter.swapCursor(mCursorFilter!!)
-        }
+//        if(mCursorFilter!=null){
+//            adapter.swapCursor(mCursorFilter!!)
+//        }
         rvRecyclerView.adapter = this.adapter
 
         rvRecyclerView.addItemDecoration(MarginItemDecoration(10))

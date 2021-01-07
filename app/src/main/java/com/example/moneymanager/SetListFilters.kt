@@ -1,18 +1,19 @@
 package com.example.moneymanager
 
+import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Website
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import java.util.Observer
+import java.util.logging.Filter
 
 
 class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: TransactionAdapter):Fragment(R.layout.fragment_set_list_filters) {
@@ -27,6 +28,8 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
     private lateinit var btnSbmtFilter      : Button
     private lateinit var tvShowAmountFilter : TextView
     private lateinit var sbAmountFilters    : SeekBar
+
+    private lateinit var viewModel          : SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +49,6 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         gridView.setAdapter(arrayAdapter)
 
         // When the user clicks on the GridItem
-
-        // When the user clicks on the GridItem
         /*gridView.setOnItemClickListener(OnItemClickListener { a, v, position, id ->
             val o: Any = gridView.getItemAtPosition(position)
         })*/
@@ -56,8 +57,10 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         return view
     }
 
-    private fun upDateQueryForDB(){
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
     private fun getAllItemsNeu(): Cursor {
@@ -93,7 +96,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         btnRevenueFilter.setOnClickListener { changeButtonAppearance(btnRevenueFilter) }
         btnYearFilter.setOnClickListener { changeButtonAppearance(btnYearFilter) }
         btnSbmtFilter.setOnClickListener{
-            listFragment.mCursorFilter = getAllItemsNeu()
+            viewModel.setFilterCursor(getAllItemsNeu())
             activity!!.supportFragmentManager.popBackStack()
         }
     }
@@ -131,5 +134,4 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
             }
         })
     }
-
 }
