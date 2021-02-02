@@ -36,6 +36,7 @@ class TransactionAdapter(var mContext: Context, var mCursor: Cursor) : RecyclerV
         if (!mCursor.moveToPosition(position)) {
             return
         }
+
         var amount: String      = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_AMOUNT))
         val date: String        = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_CREATEDAT))
         val categorie: String   = mCursor.getString(mCursor.getColumnIndex(TransactionList.TransactionEntry.COLUMN_CATEGORIE))

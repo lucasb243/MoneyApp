@@ -16,7 +16,7 @@ import java.util.Observer
 import java.util.logging.Filter
 
 
-class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: TransactionAdapter):Fragment(R.layout.fragment_set_list_filters) {
+class SetListFilters():Fragment(R.layout.fragment_set_list_filters) {
 
     private lateinit var gridView           : GridView
     private lateinit var btnYearFilter      : Button
@@ -33,6 +33,7 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -57,15 +58,9 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
-
     private fun getAllItemsNeu(): Cursor {
         val selArgs = arrayOf("r")
-        return transactionDB!!.query(
+        return viewModel.transactionDB!!.value!!.query(
                 TransactionList.TransactionEntry.TABLE_NAME,
                 null,
                 "type = ?",
@@ -75,6 +70,19 @@ class SetListFilters(var transactionDB: SQLiteDatabase, var adapter: Transaction
                 TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
     }
 
+    fun sendFilters(){
+        var filterItem = FilterItem(getTimePeriod(), getType(), tvShowAmountFilter.text.toString(), getCategories())
+
+    }
+    fun getCategories():Array<String>{
+        return arrayOf("VERSICHERUNG")
+    }
+    fun getTimePeriod():String{
+        return "week"
+    }
+    fun getType():String{
+        return "r"
+    }
     private fun setUpViews(view: View){
         gridView            = view.findViewById(R.id.gvCategoryFilter )
         btnExpeneseFilter   = view.findViewById(R.id.btnExpenseFilter)

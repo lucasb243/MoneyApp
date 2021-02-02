@@ -27,23 +27,62 @@ class ListFragment:Fragment(R.layout.fragment_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         val dbHelper = TransactionDBHelper(activity)
         transactionDB = dbHelper.writableDatabase
-
         adapter = TransactionAdapter(activity!!, getAllItems())
-
+        viewModel.setDB(transactionDB)
+        viewModel.setAdapter(adapter)
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
+
+        val rvRecyclerView = view.findViewById<RecyclerView>(R.id.rvRecyclerView)
+        rvRecyclerView.layoutManager = LinearLayoutManager(activity)
+        rvRecyclerView.adapter = this.adapter
+        rvRecyclerView.addItemDecoration(MarginItemDecoration(10))
+
+        flActBtn = view.findViewById(R.id.floatingActionButton)
+        flActBtn.setOnClickListener {
+            var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.flFrameLayout, AddItemFragment(transactionDB, adapter))
+                ft.addToBackStack(null)
+                ft.commit()
+        }
+
+        filterBtn=view.findViewById(R.id.ibFilterBtn)
+        filterBtn.setOnClickListener {
+            var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            ft.replace(R.id.flFrameLayout, SetListFilters())
+            ft.addToBackStack(null)
+            ft.commit()
+        }
+        //addRandomTransactionItem()
+        return view
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel.getFilterCursor().observe(viewLifecycleOwner, androidx.lifecycle.Observer { cursor ->
             adapter.swapCursor(cursor)
+
         })
     }
 
-    private fun addRandomTransactionItem() {
+    private fun getAllItems(): Cursor {
+        return transactionDB.query(
+                TransactionList.TransactionEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
+    }
+}/*    private fun addRandomTransactionItem() {
         var a = 1234.56
         for (i in 0..10) {
             if(i%2==0){
@@ -60,51 +99,4 @@ class ListFragment:Fragment(R.layout.fragment_list) {
                 adapter.swapCursor(getAllItems())
             }
         }
-    }
-
-    private fun getAllItems(): Cursor {
-        return transactionDB!!.query(
-                TransactionList.TransactionEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                TransactionList.TransactionEntry.COLUMN_CREATEDAT + " DESC")
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-
-        val view = inflater.inflate(R.layout.fragment_list, container, false)
-        val rvRecyclerView = view.findViewById<RecyclerView>(R.id.rvRecyclerView)
-
-        rvRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-//        if(mCursorFilter!=null){
-//            adapter.swapCursor(mCursorFilter!!)
-//        }
-        rvRecyclerView.adapter = this.adapter
-
-        rvRecyclerView.addItemDecoration(MarginItemDecoration(10))
-
-        flActBtn = view.findViewById(R.id.floatingActionButton)
-        flActBtn.setOnClickListener {
-            var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.flFrameLayout, AddItemFragment(transactionDB, adapter))
-                ft.addToBackStack(null)
-                ft.commit()
-        }
-
-        filterBtn=view.findViewById(R.id.ibFilterBtn)
-        filterBtn.setOnClickListener {
-            var ft:FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-            ft.replace(R.id.flFrameLayout, SetListFilters(transactionDB, adapter))
-            ft.addToBackStack(null)
-            ft.commit()
-        }
-        addRandomTransactionItem()
-        return view
-    }
-}
+    }*/
